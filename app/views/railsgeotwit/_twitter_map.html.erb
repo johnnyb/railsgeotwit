@@ -1,5 +1,5 @@
 <% username ||= "" %>
-<% callout_base ||= idgen("twgeo") %>
+<% callout_base ||= "twgeo_#{rand(1000)}" %>
 <% callback_name ||= "#{callout_base}_callback" %>
 <% disable_tweet_title ||= false %>
 <% marker_callback ||= nil %>
