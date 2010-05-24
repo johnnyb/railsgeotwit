@@ -1,0 +1,32 @@
+This is a widget that allows you to simply add a map of tweets using Twitter and Google Maps.  It's easy!
+
+<%= twitter_map(:username => "twitterusername", :map_style => "width: 640px; height: 480px;", :map_zoom => 8) %>
+
+Viola!  You now have a Twitter map!  
+
+Of course, we have many more options.  Here they are:
+
+** Required Options **
+username: the user whose tweets you want
+
+Also, of the "normal options" below, one of map_div_id, map_style, or map_class need to be set to properly load the map (in order for the width to be set).
+
+** Normal Options **
+map_style: CSS style of the map div 
+map_zoom: the zoom level for the map (default 8)
+map_type: the type of google map you want - ROADMAP / SATELLITE / HYBRID / TERRAIN (default ROADMAP)
+twit_count: how many tweets to load
+map_twit_count: max number of tweets to plot
+map_div_id: if you want to force a name for the map DIV, put it here
+map_class: CSS class for the map div
+disable_tweet_title: set to true if you don't want the tweets as map marker hover titles
+
+
+** Advanced Options **
+marker_callback: if you don't like how I'm displaying your tweets, set this to be a javascript function to do it for you
+map_var: if you already have a map or want to force it to be named something, put that name here
+
+** Super-Advanced Options **
+suppress_google_map_creation: set to true if you don't want us to create your map for you
+suppress_map_div: set to true if you don't want us to spit out the DIV for the map
+suppress_google_map_js_loading: set to true if you don't want us handling your google map JS loading

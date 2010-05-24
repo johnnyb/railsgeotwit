@@ -1,0 +1,70 @@
+<% username ||= "" %>
+<% callout_base ||= idgen("twgeo") %>
+<% callback_name ||= "#{callout_base}_callback" %>
+<% disable_tweet_title ||= false %>
+<% marker_callback ||= nil %>
+<% map_var ||= "#{callout_base}_map_var" %>
+<% map_div_id ||= "#{callout_base}_map" %>
+<% twit_count ||= 20 %><%# How many twits to load %>
+<% map_twit_count ||= 20 %><%# max # of geolocs to hit %>
+<% map_zoom ||= 8 %>
+<% map_type ||= "ROADMAP" %><%# -- ROADMAP / SATELLITE / HYBRID / TERRAIN %>
+<% map_style ||= nil %>
+<% map_class ||= nil %>
+<% suppress_map_div ||= false %>
+<% suppress_google_map_js_loading ||= false %>
+<% suppress_google_map_creation ||= false %>
+
+<% unless suppress_google_map_js_loading %>
+	<% unless @twmap_google_maps_loaded %>
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		<% @twmap_google_maps_loaded = true %>
+	<% end %>
+<% end %>
+
+<% unless suppress_map_div %>
+	<div id="<%= map_div_id %>" style="<%= map_style %>" class="<%= map_class %>"></div>
+<% end %>
+
+<script type="text/javascript">
+	var <%= map_var %>;
+	function <%= callback_name %>(twit_list) {
+		var has_any_points = false;
+		var llpt = null;
+		var j = <%= map_twit_count %>;
+		for(var i = 0; i < twit_list.length; i++) {
+			twit = twit_list[i];
+			if(twit.geo != null) {
+				j--; if(j < 0) { return; }
+
+				var lattitude = twit.geo.coordinates[0];
+				var longitude = twit.geo.coordinates[1];
+				llpt = new google.maps.LatLng(lattitude, longitude);
+
+				<% unless suppress_google_map_creation %>
+					if(!has_any_points) {
+						<%= map_var %> = new google.maps.Map(document.getElementById("<%= map_div_id %>"), { mapTypeId: google.maps.MapTypeId.<%= map_type %>, zoom: <%= map_zoom %>, center: llpt });
+						has_any_points = true;
+					}
+				<% end %>
+
+				<% if marker_callback %>
+					<%= marker_callback %>(llpt, twit) %>;
+				<% else %>
+					var marker = new google.maps.Marker({
+						position: llpt,
+						map: <%= map_var %>,
+						draggable: false,
+						visible: true,
+						<% unless disable_tweet_title %>	
+							title: twit.text,
+						<% end %>
+						zIndex: (twit_list.length - i)
+					});
+				<% end %>
+			}
+		}
+	}
+</script>
+
+<script src="http://twitter.com/statuses/user_timeline/<%= h(username) %>.json?callback=<%= callback_name %>&amp;count=<%= twit_count %>"></script>
