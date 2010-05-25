@@ -1,3 +1,6 @@
+/* Copyright 2010 New Medio */
+/* Usage is permitted via the MIT license - http://www.opensource.org/licenses/mit-license.php */
+
 var twitter_map_object = null;
 var twitter_map_options = {
 	map_type: google.maps.MapTypeId.ROADMAP,

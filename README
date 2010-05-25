@@ -1,8 +1,18 @@
+Copyright 2010 New Medio ( http://www.newmedio.com/ )
+
+Released under the MIT License (see LICENSE file)
+
 This is a widget that allows you to simply add a map of tweets using Twitter and Google Maps.  It's easy!
 
 <%= twitter_map(:username => "twitterusername", :map_style => "width: 640px; height: 480px;", :map_zoom => 8) %>
 
 Viola!  You now have a Twitter map!  
+
+Installation:
+
+To install, just do 
+
+script/plugin install git://github.com/johnnyb/railsgeotwit.git
 
 Of course, we have many more options.  Here they are:
 
@@ -30,3 +40,14 @@ map_var: if you already have a map or want to force it to be named something, pu
 suppress_google_map_creation: set to true if you don't want us to create your map for you
 suppress_map_div: set to true if you don't want us to spit out the DIV for the map
 suppress_google_map_js_loading: set to true if you don't want us handling your google map JS loading
+
+** Non-Rails Usage **
+
+A javascript file is included in public/javascripts that you can use for non-Rails applications.  It requires a little more doing, but here is how you would achieve basically the same result:
+
+<div id="twitter_map" style="width: 640px; height: 480px;"></div>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="twittermap.js"></script>
+<script type="text/javascript" src="http://twitter.com/statuses/user_timeline/PUTTWITTERUSERNAMEHERE.json?callback=map_tweets&amp;count=20"></script>
+
+
