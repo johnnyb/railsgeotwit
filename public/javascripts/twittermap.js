@@ -24,9 +24,12 @@ function map_tweets(twit_list) {
 	var first_point = true;
 	var llpt = null;
 
+	if(twit_list.length == null) {
+		twit_list = twit_list.results;
+	}
+
 	for(var i = 0; i < twit_list.length; i++) {
 		var twit = twit_list[i];
-		window.alert(twit.text);
 		if(twit.geo != null) {
 			var lattitude = twit.geo.coordinates[0];
 			var longitude = twit.geo.coordinates[1];
@@ -38,7 +41,6 @@ function map_tweets(twit_list) {
 					twitter_map_object = twitter_map_options.map_var;
 				}
 			}
-			window.alert("Placing marker");
 			var marker = new google.maps.Marker({
 				position: llpt,
 				map: twitter_map_object,
