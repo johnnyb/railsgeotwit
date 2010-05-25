@@ -23,6 +23,7 @@ function map_tweets(twit_list) {
 
 	for(var i = 0; i < twit_list.length; i++) {
 		var twit = twit_list[i];
+		window.alert(twit.text);
 		if(twit.geo != null) {
 			var lattitude = twit.geo.coordinates[0];
 			var longitude = twit.geo.coordinates[1];
@@ -38,6 +39,7 @@ function map_tweets(twit_list) {
 			var marker = new google.maps.Marker({
 				position: llpt,
 				map: twitter_map_object,
+				icon: first_point ? "http://maps.google.com/mapfiles/ms/icons/red-dot.png" : "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
 				draggable: false,
 				visible: true,
 				title: twit.text,

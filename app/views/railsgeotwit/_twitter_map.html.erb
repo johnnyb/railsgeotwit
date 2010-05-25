@@ -29,7 +29,7 @@
 <script type="text/javascript">
 	var <%= map_var %>;
 	function <%= callback_name %>(twit_list) {
-		var has_any_points = false;
+		var first_point = true;
 		var llpt = null;
 		var j = <%= map_twit_count %>;
 		for(var i = 0; i < twit_list.length; i++) {
@@ -42,9 +42,8 @@
 				llpt = new google.maps.LatLng(lattitude, longitude);
 
 				<% unless suppress_google_map_creation %>
-					if(!has_any_points) {
+					if(first_point) {
 						<%= map_var %> = new google.maps.Map(document.getElementById("<%= map_div_id %>"), { mapTypeId: google.maps.MapTypeId.<%= map_type %>, zoom: <%= map_zoom %>, center: llpt });
-						has_any_points = true;
 					}
 				<% end %>
 
@@ -54,6 +53,7 @@
 					var marker = new google.maps.Marker({
 						position: llpt,
 						map: <%= map_var %>,
+						icon: first_point ? "http://maps.google.com/mapfiles/ms/icons/red-dot.png" : "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
 						draggable: false,
 						visible: true,
 						<% unless disable_tweet_title %>	
@@ -62,6 +62,8 @@
 						zIndex: (twit_list.length - i)
 					});
 				<% end %>
+				
+				first_point = false;
 			}
 		}
 	}
