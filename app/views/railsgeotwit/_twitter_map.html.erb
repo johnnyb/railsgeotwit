@@ -33,7 +33,7 @@
 		var llpt = null;
 		var j = <%= map_twit_count %>;
 		for(var i = 0; i < twit_list.length; i++) {
-			twit = twit_list[i];
+			var twit = twit_list[i];
 			if(twit.geo != null) {
 				j--; if(j < 0) { return; }
 
